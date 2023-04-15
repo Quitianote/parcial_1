@@ -1,0 +1,6 @@
+*2536201!Fisica Mecanica#4/M,10,11/J,10,11
+*2538201!Ingles 2#4/M,2,3/J,2,3
+*2555221!Algebra Lineal#4/X,2,3/V,2,3
+*2555231!Calculo Integral#4/X,8,9/V,8,9
+*2598521!Informatica 2#7/L,12,13,14/M,8,9/J,8,9
+*2599421!Intro Teleco#2/L,8,9
