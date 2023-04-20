@@ -4,7 +4,9 @@
 using namespace std;
 
 bool leermaterias(char reng[], char mat[][20], char codi[], int co[]);
+bool verificar_num(char codi[]);
 void leerusu(char reng[], char dia[][9]);
+
 
 int main(){
     ifstream texto;
@@ -28,9 +30,11 @@ int main(){
     char calculo[14][20] = {""};
     char infor[14][20] = {""};
     char intro[14][20] = {""};*/
+    int modi = 0;
     int ini = 0;
     int contmat[2];
     bool aux = true;
+    bool aux_exis = true;
 
     texto.open("materias.txt");
 
@@ -64,13 +68,13 @@ int main(){
     texto.getline(reng, 256);
     leermaterias(reng, intro, codi, contmat);
     */
-
+/*
     usuario.open("jaime.txt");
     cout << "is open: " << usuario.is_open() << endl;
     cout << "archivo: " << usu << endl;
 
-    cout << "Horario "<< usu << " abierto." << endl << endl << endl;
-
+    cout << "Horario "<< usu << " abierto." << endl << endl << endl;*/
+/*
     usuario.getline(rengd, 256);//leyendo horario de usuario
     leerusu(rengd, M);
     for(int i = 0; i < 16; i ++){//forma que encontre para solucionar el problema de segmentacion de memoria
@@ -102,7 +106,7 @@ int main(){
         else cout << hora << ":  ---| " << L[i] << "  ----| " << M[i] << "  ------| " << X[i] << "  --------| " << J[i] << "  -------------| " << V[i] << "  --------| " << S[i] << "  --------------| " << D[i] << "  |" << endl;
         hora ++;
     }
-
+*/
 
 
 
@@ -149,8 +153,10 @@ int main(){
         if(ini == 0) break;//quiso salir del programa
         else if(ini == 1){//quiso mirar un archivo
             for(;;){
-                cout << "Ingrese nombre del archivo del usuario: ";cin >> usu;
+                cout << endl;
+                cout << "Ingrese nombre del archivo del usuario o '0' si desea volver: ";cin >> usu;
                 //usuario.open(usu);
+                if(usu[0] == '0') break;
                 usuario.close();
                 usuario.open(usu);
                 cout << "is open: " << usuario.is_open() << endl;
@@ -160,6 +166,7 @@ int main(){
 
                     usuario.getline(rengd, 256);//leyendo horario de usuario
                     leerusu(rengd, M);
+
                     for(int i = 0; i < 16; i ++){//forma que encontre para solucionar el problema de segmentacion de memoria
                         for(int a = 0; a < 9; a ++){
                             L[i][a] = M[i][a];
@@ -177,11 +184,10 @@ int main(){
                     leerusu(rengd, S);
                     usuario.getline(rengd, 256);
                     leerusu(rengd, D);
+
                     //imprimir horario
                     int i = 0;
-                    int a = 0;
                     int hora = 7;//hora
-                    //cout << "Dia" << endl; //-----6-----7-----8-----9-----10-----11-----12-----13-----14-----15-----16-----17-----18-----19-----20-----21-----22-----" << endl;
                     cout << "Hora ----- Lunes -------- Martes --------- Miercoles ----------- Jueves ---------------- Viernes ------------- Sabado --------------- Domingo ---|" << endl;
 
                     for(; i < 16; i ++){
@@ -189,6 +195,41 @@ int main(){
                         else cout << hora << ":  ---| " << L[i] << "  ----| " << M[i] << "  ------| " << X[i] << "  --------| " << J[i] << "  -------------| " << V[i] << "  --------| " << S[i] << "  --------------| " << D[i] << "  |" << endl;
                         hora ++;
                     }
+                    //final de imprimir horario
+                    //menu de opciones para el horario
+                    while(true){
+                        cout << "*********Opciones de horario***********" << endl << endl;
+                        cout << "Ingrese: " << endl  << "'0' Si desea volver." << endl << "'1' Para calcular horas personales." << endl << "'2' Para agregar una materia." << endl; cin >> modi;//mirando si cierra el programa o quiere abrir un horario
+                        while(modi != 0 && modi != 1 && modi != 2){
+                            cout << "Error::Numero invalido." << endl;cin >> modi;
+                        }
+                        if(modi == 0) break;//desea volver atras
+                        else if(modi == 1){//calcular horas personales
+
+                        }
+                        else if(modi == 2){//agregar materia
+                            while(true){
+                            cout << "Escriba codigo de la materia o '0' para volver: ";cin >> codi;
+                            if(codi[0] == '0') break;
+
+                            aux = verificar_num(codi);//verificando si todos los caracteres son numeros
+
+
+                            while(aux != true || sizeof(codi) / sizeof(codi[0]) != 7){//verficiando que el codigo esta bien
+                                cout << "Error::Codigo invalido:";cin >> codi;
+                                if(codi[0] == '0') break;
+                                aux = verificar_num(codi);
+                            }
+                            if(codi[0] == '0') break;
+
+                           aux_exis = verificar_exis(codi, L, M, X, J, V, S, D)//verificando si existe en el horario
+
+
+
+                            }
+                        }
+                    }
+
 
 
                 }
@@ -348,5 +389,18 @@ void leerusu(char reng[], char dia[][9]){
 
 }
 
+bool verificar_num(char codi[]){//verificar si todos los elementos del codigo son numeros
+    for(int i = 0; i < 7; i ++){
+        if((codi[i] - 0) < 48 || (codi[i] - 0) > 57) return false;
+    }
+    return true;
+}
 
+bool verificar_exis(char codi[], char L[],char M[], char X[], char J[], char V[], char S[], char D[]){
+    for(int i = 0; i < 16; i ++){
+        for(int a = 0; a < 9; a ++){
+            if()
+        }
+    }
+}
 
