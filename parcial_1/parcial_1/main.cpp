@@ -4,14 +4,23 @@
 using namespace std;
 
 bool leermaterias(char reng[], char mat[][20], char codi[], int co[]);
+void leerusu(char reng[], char dia[][9]);
 
 int main(){
     ifstream texto;
     ifstream usuario;
+    char L[16][9] = {""};
+    char M[16][9] = {""};
+    char X[16][9] = {""};
+    char J[16][9] = {""};
+    char V[16][9] = {""};
+    char S[16][9] = {""};
+    char D[16][9] = {""};
     char reng[256];
     char codi[7];
     char usu[60];
     char materia[14][20] = {""};
+    char fisica[14][20] = {""};
     char ingles[14][20] = {""};
     char algebra[14][20] = {""};
     char calculo[14][20] = {""};
@@ -35,24 +44,53 @@ int main(){
     }
     if(!aux) cout << "no se encontro la materia" << endl;
     //leyendo renglon
-    /*
+    usuario.open("santiago.txt");
+    streampos posicion_actual = usuario.tellg();
+    usuario.seekg(0);
+    usuario.getline(reng, 256);
+    leerusu(reng, L);
+
+    cout << "posicion de puntero: " << posicion_actual << endl;
+
     texto.getline(reng, 256);
-    leermaterias(reng, fisica);
+    leermaterias(reng, fisica, codi, contmat);
     texto.getline(reng, 256);
-    leermaterias(reng, ingles);
+    leermaterias(reng, ingles, codi, contmat);
     texto.getline(reng, 256);
-    leermaterias(reng, algebra);
+    leermaterias(reng, algebra, codi, contmat);
     texto.getline(reng, 256);
-    leermaterias(reng, calculo);
+    leermaterias(reng, calculo, codi, contmat);
     texto.getline(reng, 256);
-    leermaterias(reng, infor);
+    leermaterias(reng, infor, codi, contmat);
     texto.getline(reng, 256);
-    leermaterias(reng, intro);
-    */
+    leermaterias(reng, intro, codi, contmat);
+
+    usuario.getline(reng, 256);
+    leerusu(reng, M );
+    usuario.getline(reng, 256);
+    leerusu(reng, X);
+    usuario.getline(reng, 256);
+    leerusu(reng, J);
+    usuario.getline(reng, 256);
+    leerusu(reng, V);
+    usuario.getline(reng, 256);
+    leerusu(reng, S);
+    usuario.getline(reng, 256);
+    leerusu(reng, D);
+
     //tamaño de los arreglos de las materias
 
     for(int i = 0; i < 14; i ++){
         cout << materia[i] << endl;
+    }
+    for(int i = 0; i < 14; i ++){
+        cout << L[i] << " :dia " << endl;
+        cout << M[i] << " :dia " << endl;
+        cout << X[i] << " :dia " << endl;
+        cout << J[i] << " :dia " << endl;
+        cout << V[i] << " :dia " << endl;
+        cout << S[i] << " :dia " << endl;
+        cout << D[i] << " :dia " << endl;
     }
     cout << "contador: " << contmat[0] << endl;
     /*
@@ -191,6 +229,32 @@ bool leermaterias(char reng[], char mat[14][20], char codi[], int co[]){//leer r
         cout << i << " i" << endl;
     }
     return true;
+}
+
+
+void leerusu(char reng[], char dia[][9]){
+    int cont = 0;
+    int pos = 0;
+    for(int i = 0; i < 16; i ++){
+        for(int a = 0; a < 9; a ++){
+            dia[i][a] = '\0';
+        }
+    }
+    for(int i = 0; i < 256; i ++){
+        if(reng[i] != ',' && reng[i] != '/'){//mirando cada elemento del renglon
+            dia[cont][pos] = reng[i];
+            pos ++;
+        }
+        else if(reng[i] == ','){//cambiando de hora
+            cont ++;
+            pos = 0;
+        }
+        else if(reng[i] == '/'){//finalizacion de renglon
+            break;
+        }
+    }
+
+
 }
 
 

@@ -1,6 +1,6 @@
-*2536201!Fisica Mecanica#4?3/M,10,11/J,10,11-
-*2538201!Ingles 2#4?1/M,2,3/J,2,3-
-*2555221!Algebra Lineal#4?3/X,2,3/V,2,3-
-*2555231!Calculo Integral#4?3/X,8,9/V,8,9-
-*2598521!Informatica 2#7?4/L,12,13,14/M,8,9/J,8,9-
-*2599421!Intro Teleco#2?1/L,8,9-
+*2536201!Fisica Mecanica#4?3-
+*2538201!Ingles 2#4?1-
+*2555221!Algebra Lineal#4?3-
+*2555231!Calculo Integral#4?3-
+*2598521!Informatica 2#7?4-
+*2599421!Intro Teleco#2?1-
