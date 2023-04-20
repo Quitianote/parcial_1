@@ -48,7 +48,7 @@ int main(){
 
 
     //leyendo archivo usuario prueba
-    usuario.open("jaime.txt");
+
 
     /*
     texto.getline(reng, 256);
@@ -68,7 +68,7 @@ int main(){
     usuario.open("jaime.txt");
     cout << "is open: " << usuario.is_open() << endl;
     cout << "archivo: " << usu << endl;
-    if (usuario.is_open()){
+
     cout << "Horario "<< usu << " abierto." << endl << endl << endl;
 
     usuario.getline(rengd, 256);//leyendo horario de usuario
@@ -151,7 +151,8 @@ int main(){
             for(;;){
                 cout << "Ingrese nombre del archivo del usuario: ";cin >> usu;
                 //usuario.open(usu);
-                usuario.open("jaime.txt");
+                usuario.close();
+                usuario.open(usu);
                 cout << "is open: " << usuario.is_open() << endl;
                 cout << "archivo: " << usu << endl;
                 if (usuario.is_open()){
