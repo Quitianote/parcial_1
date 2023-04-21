@@ -8,6 +8,7 @@ bool verificar_num(char codi[]);
 bool verificar_exis(char codi[], char L[][9],char M[][9], char X[][9], char J[][9], char V[][9], char S[][9], char D[][9]);
 void leerusu(char reng[], char dia[][9]);
 void crear_mat(char mat[16][20], char codi[], char nom[], char hor[], char credi[]);
+void modificar(char L[16][9], char M[16][9], char X[16][9], char J[16][9], char V[16][9], char S[16][9], char D[16][9], char codi[]);
 void modificar_codi(char dia[16][9], int hora, char codi[]);
 bool verificar_libre(int hora, char codi[]);
 void vaciar(char a[16][9], int pos);
@@ -248,6 +249,8 @@ int main(){
                                 }
                                 else{//el archivo si esta en la base de datos, por lo tanto le pregunta al usuario el horario de su materia
                                     //como ya anteriormente use la funcion para buscar la materia con el codigo, entonces ya se abra guardado en el arreglo materia
+                                    modificar(L, M, X, J, V, S, D, codi);
+                                    cout << "Dia: " << L[0];
 
 
 
@@ -496,7 +499,7 @@ bool verificar_libre(int hora, char dia[16][9]){//verificar si la posicion esta 
         else break;
     }
 
-    if(temp == "Libre") return true;
+    if(temp[0] == 'L' && temp[1] == 'i' && temp[2] == 'b' && temp[3] == 'r' && temp[4] == 'e') return true;
     return false;
 }
 
@@ -512,6 +515,7 @@ void modificar(char L[16][9], char M[16][9], char X[16][9], char J[16][9], char 
             for(;;){
                 cout << endl << "Ingrese hora a la que ve la materia(en formato de 24 horas): ";cin >> h;
                 aux = verificar_libre(h, L);
+                cout << "aux: " << aux;
                 while(!aux){
                     cout << endl << "Error::No se puede agregar la hora porque ya esta ocupada" << endl << "Vuelva a intentar: ";cin >> h;
                     aux = verificar_libre(h, L);
