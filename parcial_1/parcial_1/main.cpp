@@ -5,6 +5,7 @@ using namespace std;
 
 bool leermaterias(char reng[], char mat[][20], char codi[], int co[]);
 bool verificar_num(char codi[]);
+bool verificar_exis(char codi[], char L[][9],char M[][9], char X[][9], char J[][9], char V[][9], char S[][9], char D[][9]);
 void leerusu(char reng[], char dia[][9]);
 
 
@@ -198,10 +199,10 @@ int main(){
                     //final de imprimir horario
                     //menu de opciones para el horario
                     while(true){
-                        cout << "*********Opciones de horario***********" << endl << endl;
-                        cout << "Ingrese: " << endl  << "'0' Si desea volver." << endl << "'1' Para calcular horas personales." << endl << "'2' Para agregar una materia." << endl; cin >> modi;//mirando si cierra el programa o quiere abrir un horario
+                        cout << endl << "*********Opciones de horario***********" << endl << endl;
+                        cout << endl << "Ingrese: " << endl  << "'0' Si desea volver." << endl << "'1' Para calcular horas personales." << endl << "'2' Para agregar una materia." << endl; cin >> modi;//mirando si cierra el programa o quiere abrir un horario
                         while(modi != 0 && modi != 1 && modi != 2){
-                            cout << "Error::Numero invalido." << endl;cin >> modi;
+                            cout << endl << "Error::Numero invalido." << endl;cin >> modi;
                         }
                         if(modi == 0) break;//desea volver atras
                         else if(modi == 1){//calcular horas personales
@@ -209,21 +210,46 @@ int main(){
                         }
                         else if(modi == 2){//agregar materia
                             while(true){
-                            cout << "Escriba codigo de la materia o '0' para volver: ";cin >> codi;
-                            if(codi[0] == '0') break;
-
-                            aux = verificar_num(codi);//verificando si todos los caracteres son numeros
-
-
-                            while(aux != true || sizeof(codi) / sizeof(codi[0]) != 7){//verficiando que el codigo esta bien
-                                cout << "Error::Codigo invalido:";cin >> codi;
+                                cout << endl << "Escriba codigo de la materia o '0' para volver: ";cin >> codi;
                                 if(codi[0] == '0') break;
-                                aux = verificar_num(codi);
-                            }
-                            if(codi[0] == '0') break;
 
-                           aux_exis = verificar_exis(codi, L, M, X, J, V, S, D)//verificando si existe en el horario
+                                aux = verificar_num(codi);//verificando si todos los caracteres son numeros
+                                cout << "tam: " << sizeof(codi) / sizeof(codi[0]) << endl;
 
+                                while(aux != true){//verficiando que el codigo esta bien
+                                    cout << "Error::Codigo invalido:";cin >> codi;
+                                    if(codi[0] == '0') break;
+                                    aux = verificar_num(codi);
+                                }
+                                if(codi[0] == '0') break;
+
+                                aux_exis = verificar_exis(codi, L, M, X, J, V, S, D);//verificando si existe en el horario
+
+                                while(aux_exis == true){
+                                    cout << endl << "Error::Codigo ya existente en el horario." << endl << "Vuelva a escribir el codigo o escriba '0' para cancelar: ";cin >> codi;
+                                    aux_exis = verificar_exis(codi, L, M, X, J, V, S, D);//verificando si existe en el horario
+                                    aux = verificar_num(codi);//verificando si todos los caracteres son numeros
+                                    while(aux != true){//verficiando que el codigo esta bien
+                                        cout << "Error::Codigo invalido:";cin >> codi;
+                                        if(codi[0] == '0') break;
+                                        aux = verificar_num(codi);
+                                    }
+                                }
+                                if(codi[0] == '0') break;
+                                texto.seekg(0);
+                                while(texto.good()){//verificando si el codigo esta en la base de datos
+                                    texto.getline(reng, 256);
+                                    aux = leermaterias(reng, materia, codi, contmat);
+                                    cout << "renglon: " << reng << endl;
+                                    if(aux){
+                                        cout << "se encontro la materia" << endl;
+                                        break;
+                                    }
+                                }
+                                if(!aux){
+                                    cout << "no se encontro la materia" << endl;
+
+                                }
 
 
                             }
@@ -341,7 +367,7 @@ bool leermaterias(char reng[], char mat[14][20], char codi[], int co[]){//leer r
                 }
             }
         }
-        if(aux) break;//verificando si
+        if(aux) break;//verificando si ya finalizo el renglon
         //cout << i << " i" << endl;
     }
     return true;
@@ -396,11 +422,80 @@ bool verificar_num(char codi[]){//verificar si todos los elementos del codigo so
     return true;
 }
 
-bool verificar_exis(char codi[], char L[],char M[], char X[], char J[], char V[], char S[], char D[]){
+bool verificar_exis(char codi[], char L[][9],char M[][9], char X[][9], char J[][9], char V[][9], char S[][9], char D[][9]){//verificando si el codigo ya existe en el horario
+    char temp[7] = "";
+    int a = 0;
+
     for(int i = 0; i < 16; i ++){
-        for(int a = 0; a < 9; a ++){
-            if()
+        if(L[i][0] == '*'){
+            for(; a < 9; a ++){
+                temp[a] = L[i][(a + 1)];//construyendo arreglo que luego se va a comparar
+            }
+            if(temp[0] == codi[0] && temp[1] == codi[1] && temp[2] == codi[2] && temp[3] == codi[3] && temp[4] == codi[4] && temp[5] == codi[5] && temp[6] == codi[6])return true;
+            a = 0;
+         }
+    }
+
+    for(int i = 0; i < 16; i ++){
+        if(M[i][0] == '*'){
+            for(a = 0; a < 9; a ++){
+                temp[a] = M[i][(a + 1)];//construyendo arreglo que luego se va a comparar
+            }
+            if(temp[0] == codi[0] && temp[1] == codi[1] && temp[2] == codi[2] && temp[3] == codi[3] && temp[4] == codi[4] && temp[5] == codi[5] && temp[6] == codi[6])return true;
+           a = 0;
         }
     }
+
+    for(int i = 0; i < 16; i ++){
+        if(X[i][0] == '*'){
+            for(a = 0; a < 9; a ++){
+                temp[a] = X[i][(a + 1)];//construyendo arreglo que luego se va a comparar
+            }
+            if(temp[0] == codi[0] && temp[1] == codi[1] && temp[2] == codi[2] && temp[3] == codi[3] && temp[4] == codi[4] && temp[5] == codi[5] && temp[6] == codi[6])return true;
+            a = 0;
+        }
+    }
+
+    for(int i = 0; i < 16; i ++){
+        if(J[i][0] == '*'){
+            for(a = 0; a < 9; a ++){
+                temp[a] = J[i][(a + 1)];//construyendo arreglo que luego se va a comparar
+            }
+            a = 0;
+            if(temp[0] == codi[0] && temp[1] == codi[1] && temp[2] == codi[2] && temp[3] == codi[3] && temp[4] == codi[4] && temp[5] == codi[5] && temp[6] == codi[6])return true;
+         }
+    }
+
+    for(int i = 0; i < 16; i ++){
+        if(V[i][0] == '*'){
+            for(a = 0; a < 9; a ++){
+                temp[a] = V[i][(a + 1)];//construyendo arreglo que luego se va a comparar
+            }
+            if(temp[0] == codi[0] && temp[1] == codi[1] && temp[2] == codi[2] && temp[3] == codi[3] && temp[4] == codi[4] && temp[5] == codi[5] && temp[6] == codi[6])return true;
+            a = 0;
+         }
+    }
+
+    for(int i = 0; i < 16; i ++){
+        if(S[i][0] == '*'){
+            for(a = 0; a < 9; a ++){
+                temp[a] = S[i][(a + 1)];//construyendo arreglo que luego se va a comparar
+            }
+            if(temp[0] == codi[0] && temp[1] == codi[1] && temp[2] == codi[2] && temp[3] == codi[3] && temp[4] == codi[4] && temp[5] == codi[5] && temp[6] == codi[6])return true;
+            a = 0;
+         }
+    }
+
+    for(int i = 0; i < 16; i ++){
+        if(D[i][0] == '*'){
+            for(a = 0; a < 9; a ++){
+                temp[a] = D[i][(a + 1)];//construyendo arreglo que luego se va a comparar
+            }
+            if(temp[0] == codi[0] && temp[1] == codi[1] && temp[2] == codi[2] && temp[3] == codi[3] && temp[4] == codi[4] && temp[5] == codi[5] && temp[6] == codi[6])return true;
+            a = 0;
+         }
+    }
+
+    return false;
 }
 
